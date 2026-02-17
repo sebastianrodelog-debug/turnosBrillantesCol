@@ -73,28 +73,28 @@ export function ScheduleManager() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <div>
-        <h2 className="text-2xl font-semibold text-foreground mb-1">Horarios</h2>
-        <p className="text-muted-foreground">Configura tus horarios de atención</p>
+        <h2 className="text-xl sm:text-2xl font-semibold text-foreground mb-1">Horarios</h2>
+        <p className="text-sm sm:text-base text-muted-foreground">Configura tus horarios de atención</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {days.map(({ key, label }) => (
           <div
             key={key}
             className={cn(
-              "bg-card rounded-xl p-4 border border-border transition-opacity animate-fade-in",
+              "bg-card rounded-xl p-3 sm:p-4 border border-border transition-opacity animate-fade-in",
               !schedule[key].enabled && "opacity-60"
             )}
           >
-            <div className="flex items-center justify-between mb-4">
-              <div className="flex items-center gap-3">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <Switch
                   checked={schedule[key].enabled}
                   onCheckedChange={() => toggleDay(key)}
                 />
-                <span className="font-medium text-foreground">{label}</span>
+                <span className="text-sm sm:text-base font-medium text-foreground">{label}</span>
               </div>
               {schedule[key].enabled && (
                 <Button
@@ -110,33 +110,33 @@ export function ScheduleManager() {
             </div>
 
             {schedule[key].enabled && (
-              <div className="space-y-3">
-                <div className="flex items-center gap-4">
-                  <div className="flex items-center gap-2">
-                    <Clock className="w-4 h-4 text-muted-foreground" />
-                    <Label className="text-sm text-muted-foreground">Apertura</Label>
+              <div className="space-y-2 sm:space-y-3">
+                <div className="flex items-center gap-2 sm:gap-4 flex-wrap">
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Clock className="w-3 h-3 sm:w-4 sm:h-4 text-muted-foreground" />
+                    <Label className="text-xs sm:text-sm text-muted-foreground">Apertura</Label>
                     <Input
                       type="time"
                       value={schedule[key].start}
                       onChange={(e) => updateTime(key, "start", e.target.value)}
-                      className="w-28"
+                      className="w-24 sm:w-28 h-8 sm:h-10 text-sm"
                     />
                   </div>
-                  <span className="text-muted-foreground">a</span>
-                  <div className="flex items-center gap-2">
-                    <Label className="text-sm text-muted-foreground">Cierre</Label>
+                  <span className="text-xs sm:text-sm text-muted-foreground">a</span>
+                  <div className="flex items-center gap-1 sm:gap-2">
+                    <Label className="text-xs sm:text-sm text-muted-foreground">Cierre</Label>
                     <Input
                       type="time"
                       value={schedule[key].end}
                       onChange={(e) => updateTime(key, "end", e.target.value)}
-                      className="w-28"
+                      className="w-24 sm:w-28 h-8 sm:h-10 text-sm"
                     />
                   </div>
                 </div>
 
                 {schedule[key].breaks.map((breakTime, index) => (
-                  <div key={index} className="flex items-center gap-4 pl-6">
-                    <span className="text-sm text-muted-foreground">Descanso:</span>
+                  <div key={index} className="flex items-center gap-2 sm:gap-4 pl-2 sm:pl-6 flex-wrap">
+                    <span className="text-xs sm:text-sm text-muted-foreground">Descanso:</span>
                     <Input
                       type="time"
                       value={breakTime.start}
@@ -148,9 +148,9 @@ export function ScheduleManager() {
                           [key]: { ...prev[key], breaks: newBreaks },
                         }));
                       }}
-                      className="w-28"
+                      className="w-24 sm:w-28 h-8 sm:h-10 text-sm"
                     />
-                    <span className="text-muted-foreground">a</span>
+                    <span className="text-xs sm:text-sm text-muted-foreground">a</span>
                     <Input
                       type="time"
                       value={breakTime.end}
@@ -162,15 +162,15 @@ export function ScheduleManager() {
                           [key]: { ...prev[key], breaks: newBreaks },
                         }));
                       }}
-                      className="w-28"
+                      className="w-24 sm:w-28 h-8 sm:h-10 text-sm"
                     />
                     <Button
                       variant="ghost"
                       size="icon"
                       onClick={() => removeBreak(key, index)}
-                      className="text-destructive"
+                      className="text-destructive h-8 w-8"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                     </Button>
                   </div>
                 ))}

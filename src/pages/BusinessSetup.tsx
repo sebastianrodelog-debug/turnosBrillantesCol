@@ -36,14 +36,17 @@ export default function BusinessSetup() {
     hours: DEFAULT_HOURS,
   });
 
-  const { employee, isAuthenticated, saveBusiness } = useAuth();
+  const { employee, isAuthenticated, saveBusiness, business } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isAuthenticated) {
       navigate('/auth');
+    } else if (business?.setupComplete) {
+      // If business setup is already complete, redirect to dashboard
+      navigate('/');
     }
-  }, [isAuthenticated, navigate]);
+  }, [isAuthenticated, business, navigate]);
 
   // Update services when business type changes
   useEffect(() => {
@@ -63,8 +66,13 @@ export default function BusinessSetup() {
     if (currentStep < 4) {
       setCurrentStep(prev => prev + 1);
     } else {
-      // Complete setup
-      await saveBusiness(businessData as BusinessData);
+      // Complete setup with setupComplete flag
+      const completeBusinessData = {
+        ...businessData,
+        setupComplete: true
+      } as BusinessData;
+
+      await saveBusiness(completeBusinessData);
       navigate('/');
     }
   };

@@ -81,6 +81,10 @@ export interface BusinessData {
 
   // Step 5: Notifications
   notifications?: NotificationSettings;
+
+  // Setup completion status
+  setupComplete?: boolean;
+  ownerId?: string;
 }
 
 export interface NotificationSettings {

@@ -19,6 +19,7 @@ import { LogOut } from "lucide-react";
 import { BUSINESS_TYPES, Appointment, Client, AppointmentStatus } from "@/types/business";
 import { collection, onSnapshot, query, where, orderBy, doc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+import { PWAInstallPrompt } from "@/components/PWAInstallPrompt";
 
 // ... imports
 
@@ -175,6 +176,7 @@ export default function Index() {
         </main>
       </div>
       <AppointmentDetailDialog appointment={selectedAppointment} open={detailDialogOpen} onOpenChange={setDetailDialogOpen} onUpdateStatus={handleUpdateAppointment} />
+      <PWAInstallPrompt />
     </div>
   );
 }
