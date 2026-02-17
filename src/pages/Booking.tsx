@@ -56,14 +56,25 @@ export default function Booking() {
 
   useEffect(() => {
     const fetchBusiness = async () => {
-      if (!businessId) return;
+      if (!businessId) {
+        console.log("No businessId provided in URL");
+        return;
+      }
+
+      console.log("Fetching business with ID:", businessId);
+
       try {
         const docRef = doc(db, "businesses", businessId);
         const docSnap = await getDoc(docRef);
+
+        console.log("Document exists:", docSnap.exists());
+
         if (docSnap.exists()) {
-          setBusiness({ id: docSnap.id, ...docSnap.data() } as BusinessData);
+          const businessData = { id: docSnap.id, ...docSnap.data() } as BusinessData;
+          console.log("Business data fetched:", businessData);
+          setBusiness(businessData);
         } else {
-          console.error("No such business!");
+          console.error("No such business! ID:", businessId);
         }
       } catch (error) {
         console.error("Error fetching business:", error);

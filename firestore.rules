@@ -8,15 +8,20 @@ service cloud.firestore {
     }
 
     // Allow users to read/write their own business data
+    // PUBLIC READ: Anyone can view business info for booking pages
     match /businesses/{businessId} {
-      allow read: if isAuthenticated(); // Broad read for now to simplify fetching
+      allow read: if true; // Public read so booking pages work
       allow create: if isAuthenticated() && request.resource.data.ownerId == request.auth.uid;
       allow update: if isAuthenticated() && resource.data.ownerId == request.auth.uid;
     }
 
-    // Allow access to appointments (refine this later for specific business logic)
+    // Allow access to appointments
+    // PUBLIC WRITE: Anyone can create appointments (for public booking)
+    // AUTHENTICATED READ: Only authenticated users can read appointments
     match /appointments/{appointmentId} {
-      allow read, write: if isAuthenticated();
+      allow read: if isAuthenticated();
+      allow create: if true; // Public create for booking form
+      allow update, delete: if isAuthenticated();
     }
     
     // Default deny
